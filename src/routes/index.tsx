@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Info } from "lucide-react";
 import { useMatch } from "@/store/match";
 import { BasketballIcon } from "@/components/BasketballIcon";
@@ -21,6 +21,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const navigate = useNavigate();
   const history = useMatch((s) => s.history);
   const current = useMatch((s) => s.current);
   const [setupOpen, setSetupOpen] = useState(false);
@@ -113,7 +114,7 @@ function HomePage() {
         </div>
       </div>
 
-      <SetupSheet open={setupOpen} onClose={() => setSetupOpen(false)} />
+      <SetupSheet open={setupOpen} onClose={() => setSetupOpen(false)} onStart={() => navigate({ to: "/match" })} />
       <HistoryDetail open={!!detail} record={detail} onClose={() => setDetail(null)} />
       <AboutDialog open={aboutOpen} onClose={() => setAboutOpen(false)} />
       <InstallBanner />

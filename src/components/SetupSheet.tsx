@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 import { useMatch, type PeriodType } from "@/store/match";
 
 interface Props {
   open: boolean;
   onClose: () => void;
+  onStart?: () => void;
 }
 
-export function SetupSheet({ open, onClose }: Props) {
-  const navigate = useNavigate();
+export function SetupSheet({ open, onClose, onStart }: Props) {
   const startMatch = useMatch((s) => s.startMatch);
   const [team1, setTeam1] = useState("Équipe A");
   const [team2, setTeam2] = useState("Équipe B");
@@ -32,7 +31,7 @@ export function SetupSheet({ open, onClose }: Props) {
   const submit = () => {
     startMatch({ team1Name: team1, team2Name: team2, durationMinutes: duration, periodType });
     onClose();
-    navigate({ to: "/match" });
+    onStart?.();
   };
 
   return (
